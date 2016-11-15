@@ -3,11 +3,17 @@
 #include<iostream>
 using namespace std;
 
+
 int mini(int a, int b, int c){
     return(min(a, min(b,c)));
 }
 
-int find_path(int& i, int& j, int* dist, int size2, string word1, string word2){
+void find_path(int& i, int& j, int* dist, int size2, string word1, string word2){
+    ///
+    /// Algorithm that gives the sequence of operations
+    /// (that can have no cost when one character is substituted by itself)
+    /// to go from one word to the other.
+    ///
     if(i>0 && j>0){
         int value_mini = mini(dist[(size2+1)*(i-1)+j-1], dist[(size2+1)*(i)+j-1],
                 dist[(size2+1)*(i-1)+j]);
@@ -35,6 +41,10 @@ int find_path(int& i, int& j, int* dist, int size2, string word1, string word2){
 int levenshtein_dist(string word1, string word2, bool getPath){
     ///
     ///  Please use lower-case strings
+    /// word1 : first word
+    /// word2 : second word
+    /// getPath : bool. If True, sequence of operations to do to go from
+    ///           word1 to word2
     ///
     int size1 = word1.size(), size2 = word2.size();
     int suppr_dist, insert_dist, subs_dist;
@@ -70,6 +80,11 @@ int levenshtein_dist(string word1, string word2, bool getPath){
 }
 
 int dl_dist(string word1, string word2){
+    /// Damerau-Levenshtein distance
+    ///  Please use lower-case strings
+    /// word1 : first word
+    /// word2 : second word
+    ///
     int size1 = word1.size(), size2 = word2.size();
     int suppr_dist, insert_dist, subs_dist, val;
     int* dist = new int[(size1+1)*(size2+1)];
@@ -104,6 +119,8 @@ int main(){
     cout<<"Word 1 :"<<w1<<endl;
     cout<<"Word 2 :"<<w2<<endl;
     cout<<"Levenshtein distance : "<<endl;
+    cout<<"Gives all operations, even those that don't count to go to ";
+    cout<<w2<<" from "<<w1<<'\n';
     cout<<levenshtein_dist(w1, w2, true)<<endl;
     cout<<"\n"<<endl;
 
